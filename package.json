@@ -1,0 +1,18 @@
+{
+  "name": "plenipo-docs",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.35"
+  },
+  "engines": {
+    "bun": ">=1.0.0"
+  }
+}
