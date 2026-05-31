@@ -66,7 +66,7 @@ Public repository — documentation improvements are always welcome.
 
 ## License
 
-Content is licensed under **[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)** unless otherwise noted in front matter. Code snippets in docs may reference MIT-licensed SDK code — see each SDK repository for code license terms.
+Content is licensed under **[CC BY 4.0](LICENSE)** unless otherwise noted in front matter. Code snippets in docs may reference MIT-licensed SDK code — see each SDK repository for code license terms.
 
 ## Links
 
