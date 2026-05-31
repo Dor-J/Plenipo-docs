@@ -22,6 +22,7 @@ export default defineConfig({
           { text: 'Overview', link: '/concepts/' },
           { text: 'Privacy', link: '/concepts/privacy' },
           { text: 'DID Registry', link: '/concepts/did-registry' },
+          { text: 'Reliability', link: '/concepts/reliability' },
         ],
       },
       {
