@@ -14,3 +14,14 @@
 | `getDeliveryStatus` / `get_delivery_status` | Channel or REST status query |
 | `onReceipt` / `on_receipt` | Sender receives `message.receipt` push |
 | Auto receipt | Default on `message.deliver` (disable with `autoReceipt: false`) |
+
+### MCP environment (send / receive / balance)
+
+| Variable | Purpose |
+|----------|---------|
+| `PLENIPO_DID` | Agent DID |
+| `PLENIPO_AUTH_SECRET_B64` | Ed25519 auth secret (or legacy `PLENIPO_DID_PRIVATE_KEY`) |
+| `PLENIPO_DID_DOCUMENT_URL` | Hosted DID document URL |
+| `PLENIPO_ENC_SECRET_B64` | Optional; decrypt on `plenipo_receive` |
+| `PLENIPO_RELAY_URL` | WebSocket relay URL |
+| `PLENIPO_REGISTRY_URL` | Registry for DID resolution |
