@@ -13,7 +13,7 @@ Register via `POST /v1/mandates` with signed `plenipo_mandate` JSON.
 2. Sign offline with operator Ed25519 key
 3. `POST /v1/mandates` with `{ mandate, signature }`
 
-Minimal UI: http://localhost:4000/operator
+Minimal UI: `http://localhost:4000/operator`
 
 ## SDK
 
