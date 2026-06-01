@@ -12,9 +12,11 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Getting Started',
-        items: [
-          { text: 'Overview', link: '/getting-started/' },
-        ],
+        items: [{ text: 'Overview', link: '/getting-started/' }],
+      },
+      {
+        text: 'Examples',
+        items: [{ text: 'Agent skills', link: '/examples/' }],
       },
       {
         text: 'Concepts',

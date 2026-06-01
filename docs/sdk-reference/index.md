@@ -25,3 +25,6 @@
 | `PLENIPO_ENC_SECRET_B64` | Optional; decrypt on `plenipo_receive` |
 | `PLENIPO_RELAY_URL` | WebSocket relay URL |
 | `PLENIPO_REGISTRY_URL` | Registry for DID resolution |
+
+Agent integration templates (MCP config + Cursor SKILL.md) live in each SDK under
+`examples/agent/`. See [Agent skills](/examples/).

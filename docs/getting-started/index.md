@@ -28,4 +28,4 @@ cp .env.example .env
 python -m plenipo.mcp
 ```
 
-Next: read [Concepts](/concepts/) and [SDK reference](/sdk-reference/).
+Next: wire your agent with [Agent skills](/examples/), then read [Concepts](/concepts/) and [SDK reference](/sdk-reference/).
