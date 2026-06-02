@@ -16,7 +16,10 @@ export default defineConfig({
       },
       {
         text: 'Examples',
-        items: [{ text: 'Agent skills', link: '/examples/' }],
+        items: [
+          { text: 'Agent skills', link: '/examples/' },
+          { text: 'Three-laptop local lab', link: '/local-lab/' },
+        ],
       },
       {
         text: 'Concepts',
