@@ -40,7 +40,17 @@ Optional overrides:
 | `PLENIPO_REGISTRY_URL` | `http://localhost:4001` |
 | `PLENIPO_HOME` | `~/.plenipo` |
 
-After the agent is running, use `plenipo_declare_capabilities` to advertise what it can do, `plenipo_identity` to inspect the current DID, and `plenipo_sync_identity` if Core was offline at startup.
+After the agent is running, use `plenipo_declare_route` to publish Route Record metadata (protocols, encryption, payment, limits), `plenipo_declare_capabilities` to advertise what it can do, `plenipo_discover` to search Route Records, `plenipo_identity` to inspect the current DID, and `plenipo_sync_identity` if Core was offline at startup.
+
+### Route Records v1 (local E2E)
+
+With Core and Registry running and migrations applied:
+
+```bash
+python scripts/test-two-agent-messaging.py
+```
+
+The script creates two temporary agents, declares Route Records, discovers Agent B via Registry filters, sends an encrypted payload, and asserts per-ciphertext-KB billing metadata on the send ack.
 
 ## Production / operator-driven
 
