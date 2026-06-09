@@ -52,12 +52,13 @@ python scripts/test-two-agent-messaging.py
 
 The script creates two temporary agents, declares Route Records, discovers Agent B via Registry filters, sends an encrypted payload, and asserts per-ciphertext-KB billing metadata on the send ack.
 
-### Agent Runtime v0 (Python)
+### Agent Runtime v0.1 (Python)
 
-For long-lived autonomous agents (auto-reconnect, decrypt-on-receive, receipt recovery):
+For long-lived autonomous agents with durable outbox and crash recovery:
 
 ```bash
 plenipo-agent run --print-events
+plenipo-agent status
 python -m plenipo.agent run --capability mcp --protocol plenipo.message.v1 --print-events
 ```
 
@@ -66,11 +67,10 @@ E2E coverage:
 ```bash
 python scripts/test-two-agent-messaging.py --use-runtime
 python scripts/test-agent-runtime-reconnect.py
+python scripts/test-agent-runtime-crash-recovery.py
 ```
 
-The reconnect script proves a sender that disconnects before observing a live receipt can recover billing metadata via `receipt.list` after reconnect.
-
-**Implemented in v0:** Python Agent Runtime, Route Record discovery, dev-token per-ciphertext-KB billing, receipt replay/recovery, local autonomous messaging.
+**Implemented in v0.1:** durable local outbox (`runtime.sqlite`), idempotent sends, opaque receipt cursor replay, crash/reconnect recovery, sanitized CLI `status`/`outbox`/`receipts`.
 
 **Not implemented:** wallet x402 per-message payment, auto-topup, production wallet funding, marketplace/task features, reputation, full TypeScript Agent Runtime parity (TypeScript has `listReceipts()` types only).
 

@@ -21,15 +21,17 @@ When the recipient is not connected on any cluster node, the relay **queues** th
 
 Recipients should send `message.receipt` with `{ "envelope_id" }` after handling a delivery. The relay records the receipt and pushes `message.receipt` to the sender when online.
 
-## Receipt replay (Agent Runtime v0)
+## Receipt replay (Agent Runtime v0.1)
 
 When a sender is offline or disconnects before observing a live `message.receipt`, Core persists a **canonical delivery receipt payload** (billing metadata only — no plaintext or ciphertext) at `record_receipt` time. After reconnect, senders recover missed receipts with the authenticated WebSocket command:
 
 ```json
-{ "type": "receipt.list", "since": "2026-06-08T20:56:00Z", "limit": 100 }
+{ "type": "receipt.list", "cursor": null, "limit": 100 }
 ```
 
-Replies are sender-scoped to the connected DID. Python **Agent Runtime v0** calls `receipt.list` on each connect/reconnect and tracks `last_receipt_seen_at` in `~/.plenipo/runtime-state.json`. MCP exposes the same data via `plenipo_receipts`.
+Response includes `next_cursor` for stable pagination. Cursor internals use `delivered_at` + `envelope_id` tie-break to avoid same-second skips. Legacy `since` remains supported.
+
+Replies are sender-scoped to the connected DID. Python **Agent Runtime v0.1** persists outbox/receipts in `~/.plenipo/runtime.sqlite`, calls `receipt.list` with cursor pagination on connect/reconnect, and tracks `last_receipt_cursor`. MCP exposes the same data via `plenipo_receipts`.
 
 **Not implemented in v0:** wallet x402 settlement on replay, marketplace delivery guarantees, or cross-region receipt fan-out beyond existing cluster notes.
 
