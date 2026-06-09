@@ -77,4 +77,4 @@ plenipo-agent run --print-events
 plenipo-agent sidecar --host 127.0.0.1 --port 8787
 ```
 
-**Agent Sidecar v0.2** wraps the same runtime with a localhost HTTP API (`/send`, `/events`, `/outbox`, `/receipts`) for non-Python agent processes. See [Getting Started — Agent Sidecar v0.2](../getting-started/index.md#agent-sidecar-v02-local-http).
+**Agent Sidecar v0.2.1** wraps the same runtime with an authenticated localhost HTTP API (`Authorization: Bearer`, `/health` public). See [Getting Started — Sidecar local API security](../getting-started/index.md#sidecar-local-api-security).

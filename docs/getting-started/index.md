@@ -74,20 +74,39 @@ python scripts/test-agent-runtime-crash-recovery.py
 
 **Not implemented:** wallet x402 per-message payment, auto-topup, production wallet funding, marketplace/task features, reputation, full TypeScript Agent Runtime parity (TypeScript has `listReceipts()` types only).
 
-### Agent Sidecar v0.2 (local HTTP)
+### Agent Sidecar v0.2.1 (local HTTP)
 
 For agent processes that should not embed the Python SDK directly:
 
 ```bash
 plenipo-agent sidecar --host 127.0.0.1 --port 8787
+plenipo-agent sidecar-token
 ```
 
-Example send:
+#### Sidecar local API security
+
+- `/health` is public; all other endpoints require bearer token by default
+- Token file: `~/.plenipo/sidecar-token` (or `PLENIPO_SIDECAR_TOKEN` / `--token`)
+- CORS disabled by default; configure with `--allow-origin` or `PLENIPO_SIDECAR_ALLOWED_ORIGINS`
+- Binds localhost by default; `--no-auth` is localhost-only dev mode
+- Local API sees plaintext for encrypt/decrypt; Core/Registry/Relay never do
+
+Example:
 
 ```bash
-curl -X POST http://127.0.0.1:8787/send \
-  -H "content-type: application/json" \
-  -d '{"recipient_did":"did:web:localhost:agents:peer","message":"hello"}'
+TOKEN=$(cat ~/.plenipo/sidecar-token)
+
+curl http://127.0.0.1:8787/status \
+  -H "Authorization: Bearer $TOKEN"
+```
+
+PowerShell:
+
+```powershell
+$TOKEN = Get-Content "$env:USERPROFILE\.plenipo\sidecar-token"
+
+curl.exe http://127.0.0.1:8787/status `
+  -H "Authorization: Bearer $TOKEN"
 ```
 
 E2E:
@@ -96,13 +115,12 @@ E2E:
 python scripts/test-agent-sidecar.py
 ```
 
-Docker (host loopback only):
+Docker (host loopback only; token in `/data/sidecar-token`):
 
 ```bash
 docker compose -f docker-compose.agent.yml up --build
+docker exec <container> cat /data/sidecar-token
 ```
-
-**Privacy:** local API may see plaintext; Core/Registry/Relay do not. Sidecar binds localhost by default and does not persist plaintext by default.
 
 ## Production / operator-driven
 
