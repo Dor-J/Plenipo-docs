@@ -74,14 +74,18 @@ python scripts/test-agent-runtime-crash-recovery.py
 
 **Not implemented:** wallet x402 per-message payment, auto-topup, production wallet funding, marketplace/task features, reputation, full TypeScript Agent Runtime parity (TypeScript has `listReceipts()` types only).
 
-### Agent Sidecar v0.2.1 (local HTTP)
+### Agent Sidecar v0.3.0 (local HTTP)
 
-For agent processes that should not embed the Python SDK directly:
+For agent processes that should not embed the SDK directly:
 
 ```bash
 plenipo-agent sidecar --host 127.0.0.1 --port 8787
 plenipo-agent sidecar-token
+plenipo-agent events --after-id 0
+plenipo-agent inbox
 ```
+
+**v0.3:** durable local events (`sidecar_events` in `runtime.sqlite`), encrypted inbox (`inbox_messages` + `sidecar-store.key`), cursor-based `GET /events?after_id=`, SSE `GET /events/stream`, CLI `events` and `inbox`.
 
 #### Sidecar local API security
 
@@ -90,6 +94,7 @@ plenipo-agent sidecar-token
 - CORS disabled by default; configure with `--allow-origin` or `PLENIPO_SIDECAR_ALLOWED_ORIGINS`
 - Binds localhost by default; `--no-auth` is localhost-only dev mode
 - Local API sees plaintext for encrypt/decrypt; Core/Registry/Relay never do
+- Inbound plaintext encrypted at rest; use `include_plaintext=false` for metadata-only polling
 
 Example:
 
@@ -113,6 +118,8 @@ E2E:
 
 ```bash
 python scripts/test-agent-sidecar.py
+python scripts/test-agent-sidecar-durable-events.py
+cd Plenipo-sdk-ts && bun run test:e2e:sidecar && bun run test:e2e:sidecar-durable-events
 ```
 
 Docker (host loopback only; token in `/data/sidecar-token`):

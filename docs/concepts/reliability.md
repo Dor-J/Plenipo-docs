@@ -33,6 +33,17 @@ Response includes `next_cursor` for stable pagination. Cursor internals use `del
 
 Replies are sender-scoped to the connected DID. Python **Agent Runtime v0.1** persists outbox/receipts in `~/.plenipo/runtime.sqlite`, calls `receipt.list` with cursor pagination on connect/reconnect, and tracks `last_receipt_cursor`. MCP exposes the same data via `plenipo_receipts`.
 
+## Local sidecar durability (Sidecar v0.3)
+
+The local sidecar is a trusted gateway: it may decrypt messages for authenticated local clients, but Core/Registry/Relay never see plaintext.
+
+**Agent Sidecar v0.3** (Python and TypeScript) persists:
+
+- `sidecar_events` — durable local event log with monotonic `id` cursor (`after_id` / legacy `since_id`)
+- `inbox_messages` — inbound plaintext encrypted at rest with `~/.plenipo/sidecar-store.key` (`nacl-secretbox-v1`)
+
+Unconsumed events survive sidecar restart. Long-poll `GET /events` and SSE `GET /events/stream` read from SQLite, not an in-memory ring buffer. Use `include_plaintext=false` when metadata only is needed. Plaintext is never logged.
+
 **Not implemented in v0:** wallet x402 settlement on replay, marketplace delivery guarantees, or cross-region receipt fan-out beyond existing cluster notes.
 
 ## Delivery status
