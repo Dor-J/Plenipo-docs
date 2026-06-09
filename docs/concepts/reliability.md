@@ -21,6 +21,18 @@ When the recipient is not connected on any cluster node, the relay **queues** th
 
 Recipients should send `message.receipt` with `{ "envelope_id" }` after handling a delivery. The relay records the receipt and pushes `message.receipt` to the sender when online.
 
+## Receipt replay (Agent Runtime v0)
+
+When a sender is offline or disconnects before observing a live `message.receipt`, Core persists a **canonical delivery receipt payload** (billing metadata only — no plaintext or ciphertext) at `record_receipt` time. After reconnect, senders recover missed receipts with the authenticated WebSocket command:
+
+```json
+{ "type": "receipt.list", "since": "2026-06-08T20:56:00Z", "limit": 100 }
+```
+
+Replies are sender-scoped to the connected DID. Python **Agent Runtime v0** calls `receipt.list` on each connect/reconnect and tracks `last_receipt_seen_at` in `~/.plenipo/runtime-state.json`. MCP exposes the same data via `plenipo_receipts`.
+
+**Not implemented in v0:** wallet x402 settlement on replay, marketplace delivery guarantees, or cross-region receipt fan-out beyond existing cluster notes.
+
 ## Delivery status
 
 Query via WebSocket `delivery.get` or REST `GET /v1/delivery/:envelope_id`:
@@ -48,3 +60,16 @@ client.onReceipt((r) => console.log('Receipt', r.envelope_id));
 ```
 
 Python: `PlenipoClient.send()` returns a `SendAck` dict; `auto_receipt=True` by default.
+
+```python
+from plenipo.runtime import PlenipoAgentRuntime
+
+async with PlenipoAgentRuntime() as agent:
+    async for event in agent.events():
+        if event.type == 'delivery_receipt':
+            print('receipt', event.envelope_id, event.charged_tokens, event.recovered)
+```
+
+```bash
+plenipo-agent run --print-events
+```

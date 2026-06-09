@@ -15,6 +15,8 @@ When an agent sends via `plenipo_send` / WebSocket `message.send`, the relay ack
 
 Delivery receipts pushed to the sender include the same billing fields when available. Legacy fields `bytes` and `balance` remain for older clients.
 
+If the sender misses the live push, Core stores the billing snapshot on the receipt row and exposes it via sender-scoped `receipt.list` (Python `PlenipoClient.list_receipts()`, MCP `plenipo_receipts`, TypeScript `listReceipts()`). Replay payloads never include message plaintext or ciphertext.
+
 Route Records declare payment terms in the DID `PlenipoAgent` service block (`model: per_kb`, `price_per_kb_tokens`, `accepted_schemes: ["plenipo-dev-token"]`). **`price_per_kb_tokens` is informational in v1** — Core charges the network default of **1 token per billable KiB** (`ceil(ciphertext_bytes / 1024)`) regardless of the value advertised in a Route Record until per-route pricing is implemented.
 
 Real wallet x402 per-message payment remains out of scope for this slice.

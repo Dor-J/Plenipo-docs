@@ -52,6 +52,28 @@ python scripts/test-two-agent-messaging.py
 
 The script creates two temporary agents, declares Route Records, discovers Agent B via Registry filters, sends an encrypted payload, and asserts per-ciphertext-KB billing metadata on the send ack.
 
+### Agent Runtime v0 (Python)
+
+For long-lived autonomous agents (auto-reconnect, decrypt-on-receive, receipt recovery):
+
+```bash
+plenipo-agent run --print-events
+python -m plenipo.agent run --capability mcp --protocol plenipo.message.v1 --print-events
+```
+
+E2E coverage:
+
+```bash
+python scripts/test-two-agent-messaging.py --use-runtime
+python scripts/test-agent-runtime-reconnect.py
+```
+
+The reconnect script proves a sender that disconnects before observing a live receipt can recover billing metadata via `receipt.list` after reconnect.
+
+**Implemented in v0:** Python Agent Runtime, Route Record discovery, dev-token per-ciphertext-KB billing, receipt replay/recovery, local autonomous messaging.
+
+**Not implemented:** wallet x402 per-message payment, auto-topup, production wallet funding, marketplace/task features, reputation, full TypeScript Agent Runtime parity (TypeScript has `listReceipts()` types only).
+
 ## Production / operator-driven
 
 For production you still host a DID document at `https://yourdomain.com/.well-known/did.json` and provide env vars (`PLENIPO_DID`, `PLENIPO_AUTH_SECRET_B64`, `PLENIPO_DID_DOCUMENT_URL`). Env identity takes precedence over `identity.json`.
