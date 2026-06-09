@@ -74,4 +74,7 @@ async with PlenipoAgentRuntime() as agent:
 
 ```bash
 plenipo-agent run --print-events
+plenipo-agent sidecar --host 127.0.0.1 --port 8787
 ```
+
+**Agent Sidecar v0.2** wraps the same runtime with a localhost HTTP API (`/send`, `/events`, `/outbox`, `/receipts`) for non-Python agent processes. See [Getting Started — Agent Sidecar v0.2](../getting-started/index.md#agent-sidecar-v02-local-http).

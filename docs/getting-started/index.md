@@ -74,6 +74,36 @@ python scripts/test-agent-runtime-crash-recovery.py
 
 **Not implemented:** wallet x402 per-message payment, auto-topup, production wallet funding, marketplace/task features, reputation, full TypeScript Agent Runtime parity (TypeScript has `listReceipts()` types only).
 
+### Agent Sidecar v0.2 (local HTTP)
+
+For agent processes that should not embed the Python SDK directly:
+
+```bash
+plenipo-agent sidecar --host 127.0.0.1 --port 8787
+```
+
+Example send:
+
+```bash
+curl -X POST http://127.0.0.1:8787/send \
+  -H "content-type: application/json" \
+  -d '{"recipient_did":"did:web:localhost:agents:peer","message":"hello"}'
+```
+
+E2E:
+
+```bash
+python scripts/test-agent-sidecar.py
+```
+
+Docker (host loopback only):
+
+```bash
+docker compose -f docker-compose.agent.yml up --build
+```
+
+**Privacy:** local API may see plaintext; Core/Registry/Relay do not. Sidecar binds localhost by default and does not persist plaintext by default.
+
 ## Production / operator-driven
 
 For production you still host a DID document at `https://yourdomain.com/.well-known/did.json` and provide env vars (`PLENIPO_DID`, `PLENIPO_AUTH_SECRET_B64`, `PLENIPO_DID_DOCUMENT_URL`). Env identity takes precedence over `identity.json`.
