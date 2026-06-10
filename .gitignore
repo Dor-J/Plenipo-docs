@@ -5,6 +5,7 @@ node_modules/
 dist/
 build/
 out/
+docs/.vitepress/.temp/
 .next/
 .docusaurus/
 .astro/

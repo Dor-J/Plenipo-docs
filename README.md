@@ -6,16 +6,20 @@
 
 ## Status
 
-Early development. This repository is scaffolded; site generator and content are not yet present.
+Production documentation baseline is present. The site includes getting started, concepts, production deployment, DID hosting, agent onboarding, payments/x402, API references, SDK references, sidecar security, operations, troubleshooting, and legal pages.
 
-## Planned Sections
+## Sections
 
 ```
 getting-started/     # Install SDK, create a DID, send first message
 concepts/            # Relay, privacy, mandates, tokens, registry
-api-reference/       # Relay REST/WebSocket contracts
+production/          # Deployment, DID hosting, onboarding, payments/x402
+security/            # Sidecar hardening
+operations/          # Runbook, backup/restore, troubleshooting
+api-reference/       # Relay, WebSocket, Registry, Sidecar, errors
 sdk-reference/       # TypeScript and Python APIs and MCP tools
 examples/            # Framework-specific integration samples
+legal/               # Terms, privacy, abuse, lawful requests, data rights
 ```
 
 ## Audience
@@ -40,6 +44,7 @@ Documentation should match Plenipo's architecture:
 ```powershell
 bun install
 bun run dev       # http://localhost:5173
+bun run check:links
 bun run build
 bun run preview
 ```
@@ -71,4 +76,5 @@ Content is licensed under **[CC BY 4.0](LICENSE)** unless otherwise noted in fro
 ## Links
 
 - Project overview: [ProjectReadMe.md](../ProjectReadMe.md)
+- Legal docs: [docs/legal](docs/legal/)
 - Website: [plenipo.dev](https://plenipo.dev)
