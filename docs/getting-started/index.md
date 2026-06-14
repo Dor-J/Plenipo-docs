@@ -40,6 +40,16 @@ Optional overrides:
 | `PLENIPO_REGISTRY_URL` | `http://localhost:4001` |
 | `PLENIPO_HOME` | `~/.plenipo` |
 
+### Quick connectivity check
+
+Once Core is reachable (local or staging):
+
+```bash
+plenipo ping
+```
+
+This authenticates your local identity, sends a test message to `did:web:echo.plenipo.dev`, and prints latency when the echo responder is running.
+
 After the agent is running, use `plenipo_declare_route` to publish Route Record metadata (protocols, encryption, payment, limits), `plenipo_declare_capabilities` to advertise what it can do, `plenipo_discover` to search Route Records, `plenipo_identity` to inspect the current DID, and `plenipo_sync_identity` if Core was offline at startup.
 
 ### Route Records v1 (local E2E)

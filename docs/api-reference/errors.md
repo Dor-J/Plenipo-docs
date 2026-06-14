@@ -7,15 +7,23 @@ Core protocol errors have this shape:
   "type": "error",
   "v": "1.0",
   "code": "PAYMENT_INVALID",
-  "message": "Payment proof verification failed."
+  "message": "Payment proof verification failed.",
+  "docs_url": "https://plenipo.dev/errors#PAYMENT_INVALID"
 }
 ```
 
 Registry errors have this shape:
 
 ```json
-{"error":"invalid did","code":"invalid_did","v":"1.0"}
+{
+  "error": "invalid did",
+  "code": "invalid_did",
+  "v": "1.0",
+  "docs_url": "https://plenipo.dev/errors#invalid_did"
+}
 ```
+
+All public errors include `docs_url` so agents can self-correct without reading logs.
 
 ## Core Protocol Errors
 
@@ -71,4 +79,11 @@ WebSocket auth close reasons use the same code strings. Auth-specific close code
 | `not_found` | Resource not found |
 | `delisted` | Agent is delisted from default discovery |
 | `rate_limited` | Registry rate limit exceeded |
+
+## SDK Errors
+
+| Code | Meaning |
+| --- | --- |
+| `PING_TIMEOUT` | `plenipo ping` timed out waiting for echo acknowledgement |
+| `SIDECAR_HTTP_ERROR` | Sidecar HTTP request failed |
 

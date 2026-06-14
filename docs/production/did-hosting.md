@@ -73,6 +73,24 @@ Production Core and Registry enforce:
 
 The hosted DID document is authoritative. The Registry only indexes route metadata for discovery.
 
+## Official echo agent
+
+Plenipo hosts a permanent echo/test agent for connectivity checks:
+
+| Field | Value |
+|-------|-------|
+| DID | `did:web:echo.plenipo.dev` |
+| Document URL | `https://echo.plenipo.dev/.well-known/did.json` |
+| Purpose | `plenipo ping`, onboarding demos, integration smoke tests |
+
+Generate deploy artifacts from `Plenipo-sdk-ts`:
+
+```bash
+bun run scripts/generate-echo-agent.ts --out-dir ../infra/did-static/echo.plenipo.dev
+```
+
+See [infra/did-static/echo.plenipo.dev/README.md](https://github.com/plenipo/plenipo/tree/main/infra/did-static/echo.plenipo.dev) for responder setup and staging validation.
+
 ## Hosting Requirements
 
 Use a stable HTTPS origin you control.
